@@ -1,0 +1,71 @@
+/** Add css rules here for your application. */
+
+
+/** Example rules used by the template application (remove for your app) */
+body, table td, select {
+	font-weight	: bold;
+
+}
+
+header {
+	font-size	: 1.5em;
+	font-weight	: bold;
+	color		: #0000FF;
+}
+
+td1 {
+	font-style	: italic;
+}
+
+td2 {
+
+	font-style	: italic;
+}
+
+table{
+	margin		: auto;
+
+}
+
+table td {
+	padding 	: 10px 20px 10px 20px;
+
+}
+
+
+h1 {
+	font-size	: 4em;
+	font-weight	: bold;
+	color		: #0000FF;
+	text-align	: center;
+	margin		: auto;
+}
+
+h5 {
+	margin		: auto;
+	text-align	: center;
+	color		: #00AAAA;
+}
+
+.sendButton {
+  display		: block;
+  font-size		: 16pt;
+}
+
+/** Most GWT widgets already have a style name defined */
+.gwt-DialogBox {
+  width			: 400px;
+}
+
+.dialogVPanel {
+  margin		: 5px;
+}
+
+.serverResponseLabelError {
+  color			: red;
+}
+
+/** Set ids using widget.getElement().setId("idOfElement") */
+#closeButton {
+  margin		: 15px 6px 6px;
+}

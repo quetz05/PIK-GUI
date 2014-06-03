@@ -28,6 +28,7 @@ public class StockWatcher implements EntryPoint {
 	private Button addStockButton = new Button("Add");  
 	private Label lastUpdatedLabel = new Label();
 	private ArrayList<String> stocks = new ArrayList<String>();
+	private int rowType = 0;
 
 	/**  
 	 *  Entry point method.  
@@ -35,10 +36,10 @@ public class StockWatcher implements EntryPoint {
 	public void onModuleLoad() 
 	{  
 		// Create table for stock data.
-		stocksFlexTable.setText(0, 0, "Name");
-		stocksFlexTable.setText(0, 1, "Year");
-		stocksFlexTable.setText(0, 2, "Category");
-		stocksFlexTable.setText(0, 3, "Remove");
+		stocksFlexTable.setHTML(0, 0, "<header>Name</header>");
+		stocksFlexTable.setHTML(0, 1, "<header>Year</header>");
+		stocksFlexTable.setHTML(0, 2, "<header>Category</header>");
+		stocksFlexTable.setHTML(0, 3, "<header>Remove</header>");
 		
 		// Assemble Add Stock panel.  
 		addPanel.add(newSymbolTextBox);
@@ -106,7 +107,19 @@ public class StockWatcher implements EntryPoint {
 		
 		int row = stocksFlexTable.getRowCount();
 		stocks.add(symbol);
-		stocksFlexTable.setText(row, 0 , symbol);
+		String symbolHTML;
+		if(rowType == 0)
+		{
+			symbolHTML = "<td1>" + symbol + "</td1>";
+			rowType = 1;
+		}
+		else
+		{
+			symbolHTML = "<td2>" + symbol + "</td2>";
+			rowType = 0;
+		}
+		
+		stocksFlexTable.setHTML(row, 0 , symbolHTML);
 		
 		Button removeStockButton = new Button("x");
 		removeStockButton.addClickHandler(new ClickHandler() {
