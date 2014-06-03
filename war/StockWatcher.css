@@ -1,12 +1,3 @@
-/** Add css rules here for your application. */
-
-
-/** Example rules used by the template application (remove for your app) */
-body, table td, select {
-	font-weight	: bold;
-
-}
-
 header {
 	font-size	: 1.5em;
 	font-weight	: bold;
@@ -15,11 +6,13 @@ header {
 
 td1 {
 	font-style	: italic;
+	color		: #190707;
 }
 
 td2 {
 
 	font-style	: italic;
+	color		: #070B19;
 }
 
 table{
@@ -45,6 +38,7 @@ h5 {
 	margin		: auto;
 	text-align	: center;
 	color		: #00AAAA;
+	margin-bottom: 15px;
 }
 
 .sendButton {
@@ -67,5 +61,5 @@ h5 {
 
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
-  margin		: 15px 6px 6px;
+  margin		: auto;
 }

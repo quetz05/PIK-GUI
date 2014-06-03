@@ -24,10 +24,12 @@ public class StockWatcher implements EntryPoint {
 	private VerticalPanel mainPanel = new VerticalPanel();  
 	private FlexTable stocksFlexTable = new FlexTable();  
 	private HorizontalPanel addPanel = new HorizontalPanel();  
-	private TextBox newSymbolTextBox = new TextBox();  
+	private TextBox nameTextBox = new TextBox();
+	private TextBox yearTextBox = new TextBox();
+	private TextBox categoryTextBox = new TextBox();
 	private Button addStockButton = new Button("Add");  
 	private Label lastUpdatedLabel = new Label();
-	private ArrayList<String> stocks = new ArrayList<String>();
+	private ArrayList<BaseRow> stocks = new ArrayList<BaseRow>();
 	private int rowType = 0;
 
 	/**  
@@ -41,8 +43,39 @@ public class StockWatcher implements EntryPoint {
 		stocksFlexTable.setHTML(0, 2, "<header>Category</header>");
 		stocksFlexTable.setHTML(0, 3, "<header>Remove</header>");
 		
+		nameTextBox.setTitle("name");
+		yearTextBox.setTitle("year");
+		categoryTextBox.setTitle("category");
+		
+		nameTextBox.setText("name");
+		yearTextBox.setText("year");
+		categoryTextBox.setText("category");
+		
+		nameTextBox.addClickHandler(new ClickHandler() {	
+			@Override
+			public void onClick(ClickEvent event) {
+					nameTextBox.setText("");			
+			}
+		});
+		
+		yearTextBox.addClickHandler(new ClickHandler() {	
+			@Override
+			public void onClick(ClickEvent event) {
+					yearTextBox.setText("");			
+			}
+		});
+		
+		categoryTextBox.addClickHandler(new ClickHandler() {	
+			@Override
+			public void onClick(ClickEvent event) {
+					categoryTextBox.setText("");			
+			}
+		});
+		
 		// Assemble Add Stock panel.  
-		addPanel.add(newSymbolTextBox);
+		addPanel.add(nameTextBox);
+		addPanel.add(yearTextBox);
+		addPanel.add(categoryTextBox);
 		addPanel.add(addStockButton);
 		
 		// Assemble Main panel.
@@ -52,9 +85,7 @@ public class StockWatcher implements EntryPoint {
 		
 		// Associate the Main panel with the HTML host page.
 		RootPanel.get("stockList").add(mainPanel);
-		
-		// Move cursor focus to the input box.
-		newSymbolTextBox.setFocus(true);
+
 		
 		addStockButton.addClickHandler(new ClickHandler() {
 			
@@ -93,40 +124,63 @@ public class StockWatcher implements EntryPoint {
 	 */
 	private void addStock()
 	{
-		final String symbol = newSymbolTextBox.getText().toUpperCase().trim();
+		final String newName = nameTextBox.getText().toUpperCase().trim();
+		final String newYear = yearTextBox.getText().toUpperCase().trim();
+		final String newCategory = categoryTextBox.getText().toUpperCase().trim();
 		
-		if(!symbol.matches("^[0-9A-Z\\.]{1,10}$"))
+		if(!newName.matches("^[0-9A-Z \\.]{1,20}$"))
 		{
-			Window.alert("'" + symbol + "' is not walid symbol.");
-			newSymbolTextBox.selectAll();
+			Window.alert("'" + newName + "' is not walid symbol.");
+			nameTextBox.selectAll();
+			return;
+		}
+		else if(!newYear.matches("^[0-9\\.]{1,4}$"))
+		{
+			Window.alert("'" + newYear + "' is not walid symbol.");
+			yearTextBox.selectAll();
+			return;
+		}
+		else if(!newCategory.matches("^[0-9A-Z \\.]{1,10}$"))
+		{
+			Window.alert("'" + newCategory + "' is not walid symbol.");
+			categoryTextBox.selectAll();
 			return;
 		}
 		
-		if( stocks.contains(symbol) )
-			return;
+
 		
 		int row = stocksFlexTable.getRowCount();
-		stocks.add(symbol);
-		String symbolHTML;
+		final BaseRow newRow = new BaseRow(newName, newYear, newCategory);
+
+		stocks.add(newRow);
+		String nameHTML;
+		String yearHTML;
+		String categoryHTML;
 		if(rowType == 0)
 		{
-			symbolHTML = "<td1>" + symbol + "</td1>";
+			nameHTML = "<td1>" + newName + "</td1>";
+			yearHTML = "<td1>" + newYear + "</td1>";
+			categoryHTML = "<td1>" + newCategory + "</td1>";
 			rowType = 1;
 		}
 		else
 		{
-			symbolHTML = "<td2>" + symbol + "</td2>";
+			nameHTML = "<td2>" + newName + "</td2>";
+			yearHTML = "<td2>" + newYear + "</td2>";
+			categoryHTML = "<td2>" + newCategory + "</td2>";
 			rowType = 0;
 		}
 		
-		stocksFlexTable.setHTML(row, 0 , symbolHTML);
+		stocksFlexTable.setHTML(row, 0 , nameHTML);
+		stocksFlexTable.setHTML(row, 1 , yearHTML);
+		stocksFlexTable.setHTML(row, 2 , categoryHTML);
 		
 		Button removeStockButton = new Button("x");
 		removeStockButton.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				int removedIndex = stocks.indexOf(symbol);
+				int removedIndex = stocks.indexOf(newRow);
 				stocks.remove(removedIndex);
 				stocksFlexTable.removeRow(removedIndex + 1);
 			}
