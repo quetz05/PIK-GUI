@@ -128,13 +128,13 @@ public class StockWatcher implements EntryPoint {
 		final String newYear = yearTextBox.getText().toUpperCase().trim();
 		final String newCategory = categoryTextBox.getText().toUpperCase().trim();
 		
-		if(!newName.matches("^[0-9A-Z \\.]{1,20}$"))
+		if(!newName.matches("^[0-9A-Z !\\.]{1,20}$"))
 		{
 			Window.alert("'" + newName + "' is not walid symbol.");
 			nameTextBox.selectAll();
 			return;
 		}
-		else if(!newYear.matches("^[0-9\\.]{1,4}$"))
+		else if(!newYear.matches("^[0-9\\.]{4,4}$"))
 		{
 			Window.alert("'" + newYear + "' is not walid symbol.");
 			yearTextBox.selectAll();
@@ -153,29 +153,12 @@ public class StockWatcher implements EntryPoint {
 		final BaseRow newRow = new BaseRow(newName, newYear, newCategory);
 
 		stocks.add(newRow);
-		String nameHTML;
-		String yearHTML;
-		String categoryHTML;
-		if(rowType == 0)
-		{
-			nameHTML = "<td1>" + newName + "</td1>";
-			yearHTML = "<td1>" + newYear + "</td1>";
-			categoryHTML = "<td1>" + newCategory + "</td1>";
-			rowType = 1;
-		}
-		else
-		{
-			nameHTML = "<td2>" + newName + "</td2>";
-			yearHTML = "<td2>" + newYear + "</td2>";
-			categoryHTML = "<td2>" + newCategory + "</td2>";
-			rowType = 0;
-		}
+
+		stocksFlexTable.setHTML(row, 0 , newName);
+		stocksFlexTable.setHTML(row, 1 , newYear);
+		stocksFlexTable.setHTML(row, 2 , newCategory);
 		
-		stocksFlexTable.setHTML(row, 0 , nameHTML);
-		stocksFlexTable.setHTML(row, 1 , yearHTML);
-		stocksFlexTable.setHTML(row, 2 , categoryHTML);
-		
-		Button removeStockButton = new Button("x");
+		Button removeStockButton = new Button("X");
 		removeStockButton.addClickHandler(new ClickHandler() {
 			
 			@Override

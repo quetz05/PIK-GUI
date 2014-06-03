@@ -4,17 +4,14 @@ header {
 	color		: #0000FF;
 }
 
-td1 {
-	font-style	: italic;
-	color		: #190707;
+tr:nth-child(odd){ 
+	background: #b8d1f3;
 }
 
-td2 {
-
-	font-style	: italic;
-	color		: #070B19;
+tr:nth-child(even){
+	background: #dae5f4;
 }
-
+	
 table{
 	margin		: auto;
 
